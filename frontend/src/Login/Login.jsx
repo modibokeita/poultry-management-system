@@ -1,25 +1,91 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
-import { Link } from 'react-router-dom';
+
 function Login() {
+  const [userValue, setUserValue] = useState({
+    email: '',
+    password: ''
+  });
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  function handleChange(e) {
+    setUserValue(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('http://localhost:8000/auth/login', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userValue)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        navigate('/');
+      } else {
+        setError(data.message || 'Login failed');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Something went wrong. Try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-  
-    <div className='form-container'>
-      <form action="">
+    <div className="form-container">
+      <form onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input type="text" id="username" name="username" required />
+
+        {error && <p className="error">{error}</p>}
+
+        <div className="form-group email">
+          <label htmlFor="email">Email</label>
+          <input 
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            value={userValue.email}
+            onChange={handleChange}
+            required
+          />
         </div>
+
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" required />
+          <input 
+            type="password"
+            id="password"
+            name="password"
+            value={userValue.password}
+            onChange={handleChange}
+            required
+          />
         </div>
-        <button type="submit">Login</button>
-        <p className="message">Not registered? <Link to="/signup">Create an account</Link></p>    
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+
+        <p className="message">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

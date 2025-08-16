@@ -37,7 +37,7 @@ input[type="password"] {
     width: 100%;
     /* background: #2B3337; */
     border-bottom: 1px solid #506671;
-    color: #fff;
+    color: black;
 }
 input[type="text"]:focus,
 input[type="email"]:focus,
