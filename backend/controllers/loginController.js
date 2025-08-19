@@ -11,7 +11,6 @@ export async function login(req, res){
         const query = 'SELECT email, password FROM users WHERE email = ?'
         const users = await db.all(query, [email])
 
-        console.log(users)
         if (users.length === 0){
            return res.status(400).json({message: 'User not found'})
         }

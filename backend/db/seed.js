@@ -22,4 +22,5 @@ async function seed(){
         await db.close()
         console.log('db connection closed')
     }
-}seed()
+}
+seed()
