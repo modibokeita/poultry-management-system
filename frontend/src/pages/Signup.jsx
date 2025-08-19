@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './login.css';
 
-function Login() {
+
+function Signup() {
   const [userValue, setUserValue] = useState({
+    username: '',
     email: '',
     password: ''
   });
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   function handleChange(e) {
     setUserValue(prev => ({
@@ -21,24 +22,29 @@ function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setMessage('');
 
     try {
-      const res = await fetch('http://localhost:8000/auth/login', { 
+      const res = await fetch('http://localhost:8000/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userValue)
       });
 
       const data = await res.json();
+
       if (res.ok) {
-        navigate('/');
+        navigate('/login')
+        setUserValue({ username: '', email: '', password: '' }); // Clear form
+      }else if(res.status == 400){
+        setMessage(data.message)
+
       } else {
-        setError(data.message || 'Login failed');
+        setMessage(data.message || 'Something went wrong!');
       }
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('Something went wrong. Try again.');
+    } catch (error) {
+      console.error(error);
+      setMessage('Failed to connect to server.');
     } finally {
       setLoading(false);
     }
@@ -47,9 +53,21 @@ function Login() {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
+        <h1>Sign Up</h1>
 
-        {error && <p className="error">{error}</p>}
+        {message && <p className="form-message">{message}</p>}
+
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input 
+            type="text"
+            id="username"
+            name="username"
+            value={userValue.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
         <div className="form-group email">
           <label htmlFor="email">Email</label>
@@ -77,15 +95,15 @@ function Login() {
         </div>
 
         <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? 'Signing up...' : 'Sign up'}
         </button>
 
         <p className="message">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Signup;

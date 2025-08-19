@@ -1,11 +1,272 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
-
-*{
+@import "tailwindcss";
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden; /* prevent horizontal scroll */
+}
+
 body {
     font-family: Arial, sans-serif;
+    padding-top: 100px;
+    background-color: #f9f9f9;
 }
+
+/* Header component styles */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    padding: 1.5em 2em;
+    gap: 1em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header-container a {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    color: #fff;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.menu {
+    color: #fff;
+    font-size: 2.5rem;
+}
+
+/* Login component styles */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    background: #2B3337;
+    color: #fff;
+    max-width: 800px;
+    margin: 5em auto;
+    padding: 2em;
+    border-left: .7em solid #FF01FF;
+    border-radius: 8px;
+}
+
+.message a {
+    color: #FF01FF;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    gap: .5em;
+    font-size: 1.5em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 1em;
+    margin: 1em 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    border-bottom: 1px solid #506671;
+    color: black;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border: 2px solid #FF01FF;
+    outline: none;
+}
+
+button {
+    padding: 10px;
+    background-color: #FF01FF;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #530253;
+}
+
+.form-container h1 {
+    color: #FF01FF;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+/* Side Bar component styles */
+.side-bar-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.side-bar {
+    padding: 3em 1em;
+    background-color: #212121;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 70px;
+    left: 0;
+}
+
+.side-bar a {
+    color: #ccc;
+    font-size: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    padding: 1em;
+    display: flex;
+    width: 100%;
+}
+.icons{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+/* Home page styles */
+.layout-container {
+    position: relative;
+    margin-top: 2em;
+    width: 100%;
+    max-width: 1000px;
+    margin: 2em auto;
+    text-align: center;
+}
+.home-container{
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+}
+.home-container img{
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Market place styles */
+.market img{
+    width: 100%;
+    
+}
+.market{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+.contact{
+    background-color: #212121;
+    color: white;
+    font-size: 1.5rem;
+}
+.contact-icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    gap: 1em;
+    font-size: 1.5rem;
+    
+}
+.icons-contact{
+    color: white;
+    font-size: 2rem;
+}
+
+
+/* Responsive styles */
+@media (max-width: 900px) {
+    /* Header responsive */
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1em;
+    }
+
+    .header-container a {
+        font-size: 1.2rem;
+    }
+
+    .menu {
+        font-size: 2rem;
+    }
+
+    /* footer bar responsive */
+    .side-bar {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: auto;
+        width: 100%;
+        height: 60px;
+        padding: 0.5em;
+    }
+
+    .side-bar a {
+        flex: 1;
+        padding: 0.5em;
+        font-size: 1rem;
+        justify-content: center;
+    }
+
+    /* Login form responsive */
+    .form-container {
+        width: 90%;
+        max-width: 400px;
+        margin: 2em auto;
+        padding: 1.5em;
+    }
+
+    form {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 0.8em;
+    }
+
+    /* Home container fix */
+    .home-container {
+        margin-top: 2em;
+        width: 95%;
+    }
+}
+
